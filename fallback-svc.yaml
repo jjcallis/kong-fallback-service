@@ -15,7 +15,7 @@ spec:
         app: fallback-svc
     spec:
       containers:
-      - image: 12345678910112.dkr.ecr.eu-west-2.amazonaws.com/app:v1.0 #getting the docker image from aws ecr. You can relace this with #whatever you use to store your images. I use ecr as it works really #well with automated deployments git GitHub actions.
+      - image: 12345678910112.dkr.ecr.eu-west-2.amazonaws.com/app:v1.0 #getting the docker image from aws ecr. You can relace this with whatever you use to store your images. I use ecr as it works really well with automated deployments via GitHub actions.
         imagePullPolicy: Always
         name: fallback-svc
         ports:
