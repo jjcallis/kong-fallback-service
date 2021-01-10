@@ -40,9 +40,9 @@ metadata:
   namespace: app
   name: fallback-svc
 spec:
-  type: NodePort
+  type: NodePort #allow external traffic to each my service.
   selector:
-    app: fallback-svc #allow external traffic to each my service.
+    app: fallback-svc 
   ports:
   - port: 80
     targetPort: 80
