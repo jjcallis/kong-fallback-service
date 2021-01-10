@@ -1,0 +1,49 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fallback-svc
+  namespace: app
+spec:
+  replicas:
+  selector:
+    matchLabels:
+      app: fallback-svc
+  template:
+    metadata:
+      labels:
+        app: fallback-svc
+    spec:
+      containers:
+      - image: 12345678910112.dkr.ecr.eu-west-2.amazonaws.com/app:v1.0 #getting the docker image from aws ecr. You can relace this with #whatever you use to store your images. I use ecr as it works really #well with automated deployments git GitHub actions.
+        imagePullPolicy: Always
+        name: fallback-svc
+        ports:
+        - containerPort: 80
+        livenessProbe:
+          tcpSocket:
+            port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 5
+          timeoutSeconds: 2
+        resources:
+          limits:
+            cpu: 512m
+            memory: 1024Mi
+          requests:
+            cpu: 256m
+            memory: 512m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: app
+  name: fallback-svc
+spec:
+  type: NodePort
+  selector:
+    app: fallback-svc #allow external traffic to each my service.
+  ports:
+  - port: 80
+    targetPort: 80
+    protocol: TCP
