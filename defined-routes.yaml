@@ -1,0 +1,21 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: ing-one
+  namespace: app
+  annotations:
+    kubernetes.io/ingress.class: kong
+    konghq.com/plugins: 'rl-by-ip'
+spec:
+  rules:
+  - host: example.com
+  - http:
+      paths:
+      - path: /health
+        backend:
+          serviceName: app-nginx
+          servicePort: 80
+      - path: /api/v1/awesome
+        backend:
+          serviceName: app-nginx
+          servicePort: 80     
